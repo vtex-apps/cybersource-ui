@@ -3,7 +3,7 @@
   "vendor": "vtex",
   "version": "0.0.1",
   "title": "Cybersource",
-  "description": "Cybersource Payment for IO",
+  "description": "Cybersource Payment UI",
   "categories": [],
   "registries": [
     "smartcheckout"
@@ -11,8 +11,6 @@
   "builders": {
     "messages": "1.x",
     "admin": "0.x",
-    "graphql": "1.x",
-    "paymentProvider": "1.x",
     "react": "3.x"
   },
   "mustUpdateAt": "2018-09-05",
