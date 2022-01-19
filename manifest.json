@@ -1,0 +1,139 @@
+{
+  "name": "cybersource-ui",
+  "vendor": "vtex",
+  "version": "0.0.1",
+  "title": "Cybersource",
+  "description": "Cybersource Payment for IO",
+  "categories": [],
+  "registries": [
+    "smartcheckout"
+  ],
+  "builders": {
+    "messages": "1.x",
+    "admin": "0.x",
+    "graphql": "1.x",
+    "paymentProvider": "1.x",
+    "react": "3.x"
+  },
+  "mustUpdateAt": "2018-09-05",
+  "scripts": {
+    "postreleasy": "vtex publish --verbose"
+  },
+  "dependencies": {
+    "vtex.styleguide": "9.x",
+    "vtex.apps-graphql": "2.x",
+    "vtex.cybersource": "1.x"
+  },
+  "policies": [
+    {
+      "name": "ADMIN_DS"
+    },
+    {
+      "name": "LogisticsViewer"
+    },
+    {
+      "name": "OMSViewer"
+    },
+    {
+      "name": "SaveOrderFormConfiguration"
+    },
+    {
+      "name": "AcessaTodosPedidos"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexcommercestable.com.br",
+        "path": "/api/checkout/pvt/configuration/orderForm"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexcommercestable.com.br",
+        "path": "/api/checkout/pub/orders/order-group/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "apitest.cybersource.com",
+        "path": "/pts/v2/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.cybersource.com",
+        "path": "/pts/v2/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "apitest.cybersource.com",
+        "path": "/risk/v1/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.cybersource.com",
+        "path": "/risk/v1/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "apitest.cybersource.com",
+        "path": "/vas/v2/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.cybersource.com",
+        "path": "/vas/v2/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "apitest.cybersource.com",
+        "path": "/reporting/v3/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.cybersource.com",
+        "path": "/reporting/v3/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "vtexus.myvtex.com",
+        "path": "/_v/tax-fallback/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "lookup.binlist.net",
+        "path": "/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexpayments.com.br",
+        "path": "/payment-provider/transactions/*"
+      }
+    },
+    {
+      "name": "vbase-read-write"
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
+}
