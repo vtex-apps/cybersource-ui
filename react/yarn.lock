@@ -5125,10 +5125,6 @@ verror@1.10.0:
   version "2.8.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.apps-graphql@2.8.0/public/@types/vtex.apps-graphql#4fd47b1281c4d36e8abb1cfa4daea83bc739eca1"
 
-"vtex.cybersource@https://cybersource--sandboxusdev.myvtex.com/_v/private/typings/linked/v1/vtex.cybersource@0.2.1+build1643027468/public/@types/vtex.cybersource":
-  version "0.2.1"
-  resolved "https://cybersource--sandboxusdev.myvtex.com/_v/private/typings/linked/v1/vtex.cybersource@0.2.1+build1643027468/public/@types/vtex.cybersource#7e412f8ea5bf20f863b3354658590c8d6fccfa93"
-
 "vtex.render-runtime@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.3/public/@types/vtex.render-runtime":
   version "8.132.3"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.3/public/@types/vtex.render-runtime#c7dd142e384f38bd7a7c841543b73e9349fadc93"
