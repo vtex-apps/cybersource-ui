@@ -17,11 +17,11 @@ import {
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Link } from 'vtex.render-runtime'
 import { useQuery, useMutation } from 'react-apollo'
-
+import MerchantDictionary from './components/merchantDictionary'
 import M_INIT_CONFIG from './mutations/InitConfiguration.gql'
 import RemoveConfiguration from './mutations/RemoveConfiguration.gql'
-import AppSettings from './queries/appSettings.graphql'
-import SaveAppSettings from './mutations/saveAppSettings.graphql'
+import AppSettings from './queries/appSettings.gql'
+import SaveAppSettings from './mutations/saveAppSettings.gql'
 
 const Admin: FC = () => {
   const { formatMessage } = useIntl()
@@ -42,9 +42,6 @@ const Admin: FC = () => {
   })
 
   const { data } = useQuery(AppSettings, {
-    variables: {
-      version: process.env.VTEX_APP_VERSION,
-    },
     ssr: false,
   })
 
@@ -81,7 +78,6 @@ const Admin: FC = () => {
 
       await saveSettings({
         variables: {
-          version: process.env.VTEX_APP_VERSION,
           settings: JSON.stringify(settingsState),
         },
       }).then(() => {
@@ -317,6 +313,7 @@ const Admin: FC = () => {
                   <FormattedMessage id="admin/cybersource.saveSettings.buttonText" />
                 </Button>
               </section>
+              <MerchantDictionary></MerchantDictionary>
             </PageBlock>
           </Layout>
         )}

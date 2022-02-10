@@ -1,7 +1,6 @@
-mutation SaveAppSettings($version: String, $settings: String) {
+mutation SaveAppSettings($settings: String) {
   saveAppSettings(
     app: "vtex.cybersource"
-    version: $version
     settings: $settings
   ) @context(provider: "vtex.apps-graphql") {
     message

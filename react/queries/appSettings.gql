@@ -1,0 +1,6 @@
+query AppSettings {
+  appSettings(app: "vtex.cybersource")
+    @context(provider: "vtex.apps-graphql") {
+    message
+  }
+}
