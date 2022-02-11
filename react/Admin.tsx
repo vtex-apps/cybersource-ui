@@ -17,6 +17,7 @@ import {
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Link } from 'vtex.render-runtime'
 import { useQuery, useMutation } from 'react-apollo'
+
 import MerchantDictionary from './components/merchantDictionary'
 import M_INIT_CONFIG from './mutations/InitConfiguration.gql'
 import RemoveConfiguration from './mutations/RemoveConfiguration.gql'
@@ -113,7 +114,9 @@ const Admin: FC = () => {
     return (
       <Layout
         pageHeader={
-          <PageHeader title={<FormattedMessage id="admin/cybersource.title" />} />
+          <PageHeader
+            title={<FormattedMessage id="admin/cybersource.title" />}
+          />
         }
         fullWidth
       >
@@ -136,6 +139,7 @@ const Admin: FC = () => {
             }
             fullWidth
           >
+            <MerchantDictionary />
             <PageBlock
               subtitle={
                 <FormattedMessage
@@ -247,26 +251,26 @@ const Admin: FC = () => {
                     })
                   }
                 />
-                </section>
-                <section className="pv4">
-                  <Toggle
-                    semantic
-                    label={formatMessage({
-                        id: 'admin/cybersource.settings.EnableTax.label',
-                    })}
-                    size="large"
-                        checked={settingsState.EnableTax}
-                    onChange={() => {
-                        setSettingsState({
-                            ...settingsState,
-                            EnableTax: !settingsState.EnableTax,
-                        })
-                    }}
-                    helpText={formatMessage({
-                        id: 'admin/cybersource.settings.EnableTax.helpText',
-                    })}
+              </section>
+              <section className="pv4">
+                <Toggle
+                  semantic
+                  label={formatMessage({
+                    id: 'admin/cybersource.settings.EnableTax.label',
+                  })}
+                  size="large"
+                  checked={settingsState.EnableTax}
+                  onChange={() => {
+                    setSettingsState({
+                      ...settingsState,
+                      EnableTax: !settingsState.EnableTax,
+                    })
+                  }}
+                  helpText={formatMessage({
+                    id: 'admin/cybersource.settings.EnableTax.helpText',
+                  })}
                 />
-                </section>
+              </section>
               <section className="pv4">
                 <Toggle
                   semantic
@@ -313,7 +317,6 @@ const Admin: FC = () => {
                   <FormattedMessage id="admin/cybersource.saveSettings.buttonText" />
                 </Button>
               </section>
-              <MerchantDictionary></MerchantDictionary>
             </PageBlock>
           </Layout>
         )}
