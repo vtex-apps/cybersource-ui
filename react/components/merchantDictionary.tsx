@@ -17,8 +17,9 @@ const MerchantDictionary: FunctionComponent = () => {
       'orderid',
       'paymentid',
     ]),
+    keyWords: new Set(['Pad', 'date']),
     inputMapping: {},
-    ruleCharacters: { '{': '}', '}': '{', '|': '|' },
+    ruleCharacters: { '{': '}', '}': '{' },
     isValid: true,
   })
 
@@ -39,11 +40,24 @@ const MerchantDictionary: FunctionComponent = () => {
         goodPortion += char
       } else if (stack.length >= 1 && char === '}') {
         // If there is a closing bracket
-        // Pops the whole word
+        // Pops the whole word, if there are no pipe between two sets of brackets
         if (state.lookupSet.has(stack[stack.length - 1])) {
           const poppedWord: string = stack.pop() ?? ''
 
           goodPortion += poppedWord
+        } else {
+          const splitBracketString = stack[stack.length - 1].split('|')
+
+          if (
+            splitBracketString.length === 3 &&
+            state.lookupSet.has(splitBracketString[0]) &&
+            state.keyWords.has(splitBracketString[1]) &&
+            splitBracketString[2].length > 0
+          ) {
+            const poppedWord: string = stack.pop() ?? ''
+
+            goodPortion += poppedWord
+          }
         }
 
         // Pops the bottom layer bracket
@@ -56,12 +70,31 @@ const MerchantDictionary: FunctionComponent = () => {
         stack[0] === '{' &&
         !(char in state.ruleCharacters)
       ) {
+        // Push to stack if it is either {{ or |
+        // if (stack.length === 2 || stack[stack.length - 1] === '|') {
+        //   stack.push(char)
+        // } else if (stack[stack.length - 1] !== '|') {
+        //   stack[stack.length - 1] += char
+        // }
         if (stack.length === 2) {
-          stack[2] = char
+          stack.push(char)
         } else {
-          stack[2] += char
+          stack[stack.length - 1] += char
         }
       }
+      // } else if (stack[0] === stack[1] && stack[0] === '{' && char === '|') {
+      //   if (state.lookupSet.has(stack[stack.length - 1])) {
+      //     const poppedWord: string = stack.pop() ?? ''
+
+      //     goodPortion += poppedWord
+      //   }
+
+      //   if (stack[stack.length - 1] !== '|') {
+      //     stack.push('|')
+      //   } else {
+      //     stack.pop()
+      //   }
+      // }
     }
 
     // console.log(goodPortion)
