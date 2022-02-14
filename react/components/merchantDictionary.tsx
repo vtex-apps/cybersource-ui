@@ -23,6 +23,30 @@ const MerchantDictionary: FunctionComponent = () => {
     isValid: true,
   })
 
+  const isValidPadding = (paddingString: string) => {
+    if (paddingString.length === 0) {
+      return false
+    }
+
+    const splitPaddingString = paddingString.split(':')
+
+    if (splitPaddingString.length === 1) {
+      return true
+    }
+
+    if (
+      splitPaddingString.length === 2 &&
+      splitPaddingString[1].length === 1 &&
+      splitPaddingString[0].match('^\\d+$') &&
+      splitPaddingString[0].length > 0 &&
+      splitPaddingString[0].length < 3
+    ) {
+      return true
+    }
+
+    return false
+  }
+
   const setDictionaryMap = (textInput: string) => {
     setState({ ...state, textInput })
 
@@ -52,7 +76,7 @@ const MerchantDictionary: FunctionComponent = () => {
             splitBracketString.length === 3 &&
             state.lookupSet.has(splitBracketString[0]) &&
             state.keyWords.has(splitBracketString[1]) &&
-            splitBracketString[2].length > 0
+            isValidPadding(splitBracketString[2])
           ) {
             const poppedWord: string = stack.pop() ?? ''
 
@@ -70,36 +94,11 @@ const MerchantDictionary: FunctionComponent = () => {
         stack[0] === '{' &&
         !(char in state.ruleCharacters)
       ) {
-        // Push to stack if it is either {{ or |
-        // if (stack.length === 2 || stack[stack.length - 1] === '|') {
-        //   stack.push(char)
-        // } else if (stack[stack.length - 1] !== '|') {
-        //   stack[stack.length - 1] += char
-        // }
-        if (stack.length === 2) {
-          stack.push(char)
-        } else {
-          stack[stack.length - 1] += char
-        }
+        stack.length === 2
+          ? stack.push(char)
+          : (stack[stack.length - 1] += char)
       }
-      // } else if (stack[0] === stack[1] && stack[0] === '{' && char === '|') {
-      //   if (state.lookupSet.has(stack[stack.length - 1])) {
-      //     const poppedWord: string = stack.pop() ?? ''
-
-      //     goodPortion += poppedWord
-      //   }
-
-      //   if (stack[stack.length - 1] !== '|') {
-      //     stack.push('|')
-      //   } else {
-      //     stack.pop()
-      //   }
-      // }
     }
-
-    // console.log(goodPortion)
-
-    // console.log(stack)
 
     setState({ ...state, isValid: stack.length === 0 })
   }
