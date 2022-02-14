@@ -3,7 +3,16 @@ import React, { useState } from 'react'
 import { Tag, Textarea } from 'vtex.styleguide'
 
 const MerchantDictionary: FunctionComponent = () => {
-  const [state, setState] = useState({
+  const [state, setState] = useState<{
+    textInput: string
+    lookupSet: Set<string>
+    keyWords: Set<string>
+    inputMapping: any
+    ruleCharacters: any
+    dateLengthRules: any
+    isValid: boolean
+    goodPortion: string
+  }>({
     textInput: '',
     lookupSet: new Set([
       'currency',
@@ -20,11 +29,17 @@ const MerchantDictionary: FunctionComponent = () => {
     keyWords: new Set(['Pad', 'date']),
     inputMapping: {},
     ruleCharacters: { '{': '}', '}': '{' },
+    dateLengthRules: {
+      d: 2,
+      M: 2,
+      y: 4,
+    },
     isValid: true,
+    goodPortion: '',
   })
 
-  const isValidPadding = (paddingString: string) => {
-    if (paddingString.length === 0) {
+  const isValidPadding = (paddingString: string, keyword: string) => {
+    if (keyword !== 'Pad' || paddingString.length === 0) {
       return false
     }
 
@@ -45,6 +60,36 @@ const MerchantDictionary: FunctionComponent = () => {
     }
 
     return false
+  }
+
+  const isValidDate = (dateString: string, keyword: string) => {
+    if (keyword !== 'date' || dateString.length === 0) {
+      return false
+    }
+
+    const dateArr: string[] = dateString.split('/')
+
+    if (dateArr.length > 3) {
+      return false
+    }
+
+    let isValidDateString = false
+
+    for (const dateField of dateArr) {
+      if (
+        dateField.length > 0 &&
+        dateField.charAt(0) in state.dateLengthRules &&
+        dateField.split(dateField.charAt(0)).length - 1 === dateField.length &&
+        dateField.length <= state.dateLengthRules[dateField.charAt(0)]
+      ) {
+        isValidDateString = true
+      } else {
+        isValidDateString = false
+        break
+      }
+    }
+
+    return isValidDateString
   }
 
   const setDictionaryMap = (textInput: string) => {
@@ -76,7 +121,8 @@ const MerchantDictionary: FunctionComponent = () => {
             splitBracketString.length === 3 &&
             state.lookupSet.has(splitBracketString[0]) &&
             state.keyWords.has(splitBracketString[1]) &&
-            isValidPadding(splitBracketString[2])
+            (isValidPadding(splitBracketString[2], splitBracketString[1]) ||
+              isValidDate(splitBracketString[2], splitBracketString[1]))
           ) {
             const poppedWord: string = stack.pop() ?? ''
 
@@ -100,7 +146,7 @@ const MerchantDictionary: FunctionComponent = () => {
       }
     }
 
-    setState({ ...state, isValid: stack.length === 0 })
+    setState({ ...state, isValid: stack.length === 0, goodPortion })
   }
 
   return (
@@ -124,6 +170,7 @@ const MerchantDictionary: FunctionComponent = () => {
           {state.textInput}
         </Textarea>
         <Tag type="success">{state.isValid.toString()}</Tag>
+        <Tag type="success">{state.goodPortion}</Tag>
       </div>
     </div>
   )
