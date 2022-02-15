@@ -13,6 +13,8 @@ import {
   Input,
   Dropdown,
   Spinner,
+  Tab,
+  Tabs,
 } from 'vtex.styleguide'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Link } from 'vtex.render-runtime'
@@ -40,6 +42,10 @@ const Admin: FC = () => {
     EnableTransactionPosting: false,
     SalesChannelExclude: '',
     EnableTax: false,
+  })
+
+  const [initialAdminState, setAdminState] = useState({
+    currentTab: 1,
   })
 
   const { data } = useQuery(AppSettings, {
@@ -139,185 +145,208 @@ const Admin: FC = () => {
             }
             fullWidth
           >
-            <MerchantDictionary />
-            <PageBlock
-              subtitle={
-                <FormattedMessage
-                  id="admin/cybersource.settings.introduction"
-                  values={{
-                    cybersourceLink: (
-                      // eslint-disable-next-line react/jsx-no-target-blank
-                      <Link to="https://www.cybersource.com/" target="_blank">
-                        https://www.cybersource.com/
-                      </Link>
-                    ),
-                    lineBreak: <br />,
-                  }}
-                />
-              }
-            >
-              <section className="pv4">
-                <Toggle
-                  semantic
-                  label={formatMessage({
-                    id: 'admin/cybersource.settings.isLive.label',
-                  })}
-                  size="large"
-                  checked={settingsState.IsLive}
-                  onChange={() => {
-                    setSettingsState({
-                      ...settingsState,
-                      IsLive: !settingsState.IsLive,
-                    })
-                  }}
-                  helpText={formatMessage({
-                    id: 'admin/cybersource.settings.isLive.helpText',
-                  })}
-                />
-              </section>
-              <section className="pb4 mt4">
-                <Input
-                  label={formatMessage({
-                    id: 'admin/cybersource.settings.merchantId.label',
-                  })}
-                  value={settingsState.MerchantId}
-                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                    setSettingsState({
-                      ...settingsState,
-                      MerchantId: e.currentTarget.value,
-                    })
-                  }
-                  helpText={formatMessage({
-                    id: 'admin/cybersource.settings.merchantId.helpText',
-                  })}
-                />
-              </section>
-              <section className="pb4 mt4">
-                <Input
-                  label={formatMessage({
-                    id: 'admin/cybersource.settings.merchantKey.label',
-                  })}
-                  value={settingsState.MerchantKey}
-                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                    setSettingsState({
-                      ...settingsState,
-                      MerchantKey: e.currentTarget.value,
-                    })
-                  }
-                  helpText={formatMessage({
-                    id: 'admin/cybersource.settings.merchantKey.helpText',
-                  })}
-                />
-              </section>
-              <section className="pb4 mt4">
-                <Input
-                  label={formatMessage({
-                    id: 'admin/cybersource.settings.sharedSecretKey.label',
-                  })}
-                  value={settingsState.SharedSecretKey}
-                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                    setSettingsState({
-                      ...settingsState,
-                      SharedSecretKey: e.currentTarget.value,
-                    })
-                  }
-                  helpText={formatMessage({
-                    id: 'admin/cybersource.settings.sharedSecretKey.helpText',
-                  })}
-                />
-              </section>
-              <section className="mb5">
-                <Dropdown
-                  label="Processor"
-                  options={processorOptions}
-                  value={settingsState.Processor}
-                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                    setSettingsState({
-                      ...settingsState,
-                      Processor: e.currentTarget.value,
-                    })
-                  }
-                />
-              </section>
-              <section className="mb5">
-                <Dropdown
-                  label="Region"
-                  options={regionOptions}
-                  value={settingsState.Region}
-                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                    setSettingsState({
-                      ...settingsState,
-                      Region: e.currentTarget.value,
-                    })
-                  }
-                />
-              </section>
-              <section className="pv4">
-                <Toggle
-                  semantic
-                  label={formatMessage({
-                    id: 'admin/cybersource.settings.EnableTax.label',
-                  })}
-                  size="large"
-                  checked={settingsState.EnableTax}
-                  onChange={() => {
-                    setSettingsState({
-                      ...settingsState,
-                      EnableTax: !settingsState.EnableTax,
-                    })
-                  }}
-                  helpText={formatMessage({
-                    id: 'admin/cybersource.settings.EnableTax.helpText',
-                  })}
-                />
-              </section>
-              <section className="pv4">
-                <Toggle
-                  semantic
-                  label={formatMessage({
-                    id: 'admin/cybersource.settings.enableTransactionPosting.label',
-                  })}
-                  size="large"
-                  checked={settingsState.EnableTransactionPosting}
-                  onChange={() => {
-                    setSettingsState({
-                      ...settingsState,
-                      EnableTransactionPosting:
-                        !settingsState.EnableTransactionPosting,
-                    })
-                  }}
-                  helpText={formatMessage({
-                    id: 'admin/cybersource.settings.enableTransactionPosting.helpText',
-                  })}
-                />
-              </section>
-              <section className="pb4 mt4">
-                <Input
-                  label={formatMessage({
-                    id: 'admin/cybersource.settings.salesChannelExclude.label',
-                  })}
-                  value={settingsState.SalesChannelExclude}
-                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                    setSettingsState({
-                      ...settingsState,
-                      SalesChannelExclude: e.currentTarget.value,
-                    })
-                  }
-                  helpText={formatMessage({
-                    id: 'admin/cybersource.settings.salesChannelExclude.helpText',
-                  })}
-                />
-              </section>
-              <section className="pt4">
-                <Button
-                  variation="primary"
-                  onClick={() => handleSaveSettings(showToast)}
-                  isLoading={settingsLoading}
+            <div>
+              <Tabs fullWidth>
+                <Tab
+                  label="Admin Settings"
+                  active={initialAdminState.currentTab === 1}
+                  onClick={() => setAdminState({ currentTab: 1 })}
                 >
-                  <FormattedMessage id="admin/cybersource.saveSettings.buttonText" />
-                </Button>
-              </section>
-            </PageBlock>
+                  <div className="pt7">
+                    <PageBlock
+                      subtitle={
+                        <FormattedMessage
+                          id="admin/cybersource.settings.introduction"
+                          values={{
+                            cybersourceLink: (
+                              // eslint-disable-next-line react/jsx-no-target-blank
+                              <Link
+                                to="https://www.cybersource.com/"
+                                target="_blank"
+                              >
+                                https://www.cybersource.com/
+                              </Link>
+                            ),
+                            lineBreak: <br />,
+                          }}
+                        />
+                      }
+                    >
+                      <section className="pv4">
+                        <Toggle
+                          semantic
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.isLive.label',
+                          })}
+                          size="large"
+                          checked={settingsState.IsLive}
+                          onChange={() => {
+                            setSettingsState({
+                              ...settingsState,
+                              IsLive: !settingsState.IsLive,
+                            })
+                          }}
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.isLive.helpText',
+                          })}
+                        />
+                      </section>
+                      <section className="pb4 mt4">
+                        <Input
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.merchantId.label',
+                          })}
+                          value={settingsState.MerchantId}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                            setSettingsState({
+                              ...settingsState,
+                              MerchantId: e.currentTarget.value,
+                            })
+                          }
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.merchantId.helpText',
+                          })}
+                        />
+                      </section>
+                      <section className="pb4 mt4">
+                        <Input
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.merchantKey.label',
+                          })}
+                          value={settingsState.MerchantKey}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                            setSettingsState({
+                              ...settingsState,
+                              MerchantKey: e.currentTarget.value,
+                            })
+                          }
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.merchantKey.helpText',
+                          })}
+                        />
+                      </section>
+                      <section className="pb4 mt4">
+                        <Input
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.sharedSecretKey.label',
+                          })}
+                          value={settingsState.SharedSecretKey}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                            setSettingsState({
+                              ...settingsState,
+                              SharedSecretKey: e.currentTarget.value,
+                            })
+                          }
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.sharedSecretKey.helpText',
+                          })}
+                        />
+                      </section>
+                      <section className="mb5">
+                        <Dropdown
+                          label="Processor"
+                          options={processorOptions}
+                          value={settingsState.Processor}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                            setSettingsState({
+                              ...settingsState,
+                              Processor: e.currentTarget.value,
+                            })
+                          }
+                        />
+                      </section>
+                      <section className="mb5">
+                        <Dropdown
+                          label="Region"
+                          options={regionOptions}
+                          value={settingsState.Region}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                            setSettingsState({
+                              ...settingsState,
+                              Region: e.currentTarget.value,
+                            })
+                          }
+                        />
+                      </section>
+                      <section className="pv4">
+                        <Toggle
+                          semantic
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.EnableTax.label',
+                          })}
+                          size="large"
+                          checked={settingsState.EnableTax}
+                          onChange={() => {
+                            setSettingsState({
+                              ...settingsState,
+                              EnableTax: !settingsState.EnableTax,
+                            })
+                          }}
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.EnableTax.helpText',
+                          })}
+                        />
+                      </section>
+                      <section className="pv4">
+                        <Toggle
+                          semantic
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.enableTransactionPosting.label',
+                          })}
+                          size="large"
+                          checked={settingsState.EnableTransactionPosting}
+                          onChange={() => {
+                            setSettingsState({
+                              ...settingsState,
+                              EnableTransactionPosting:
+                                !settingsState.EnableTransactionPosting,
+                            })
+                          }}
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.enableTransactionPosting.helpText',
+                          })}
+                        />
+                      </section>
+                      <section className="pb4 mt4">
+                        <Input
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.salesChannelExclude.label',
+                          })}
+                          value={settingsState.SalesChannelExclude}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                            setSettingsState({
+                              ...settingsState,
+                              SalesChannelExclude: e.currentTarget.value,
+                            })
+                          }
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.salesChannelExclude.helpText',
+                          })}
+                        />
+                      </section>
+                      <section className="pt4">
+                        <Button
+                          variation="primary"
+                          onClick={() => handleSaveSettings(showToast)}
+                          isLoading={settingsLoading}
+                        >
+                          <FormattedMessage id="admin/cybersource.saveSettings.buttonText" />
+                        </Button>
+                      </section>
+                    </PageBlock>
+                  </div>
+                </Tab>
+                <Tab
+                  label="Merchant Defined Fields"
+                  active={initialAdminState.currentTab === 2}
+                  onClick={() => setAdminState({ currentTab: 2 })}
+                >
+                  <div className="pt7">
+                    <MerchantDictionary />
+                  </div>
+                </Tab>
+              </Tabs>
+            </div>
           </Layout>
         )}
       </ToastConsumer>
