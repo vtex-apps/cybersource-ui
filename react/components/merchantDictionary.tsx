@@ -1,8 +1,36 @@
 import type { FunctionComponent } from 'react'
 import React, { useState } from 'react'
-import { Tag, Textarea } from 'vtex.styleguide'
+import { Table, Tag, Textarea } from 'vtex.styleguide'
 
 const MerchantDictionary: FunctionComponent = () => {
+  const defaultSchema = {
+    properties: {
+      userInput: {
+        title: 'User Input',
+        width: 300,
+      },
+      isValid: {
+        title: 'Valid',
+        minWidth: 100,
+        cellRenderer: ({ cellData }: any) => {
+          return cellData ? (
+            <Tag type="success" variation="low">
+              Valid
+            </Tag>
+          ) : (
+            <Tag type="error" variation="low">
+              Invalid
+            </Tag>
+          )
+        },
+      },
+      goodPortion: {
+        title: 'Successful Portion',
+        minWidth: 100,
+      },
+    },
+  }
+
   const [state, setState] = useState<{
     textInput: string
     lookupSet: Set<string>
@@ -10,8 +38,11 @@ const MerchantDictionary: FunctionComponent = () => {
     inputMapping: any
     ruleCharacters: any
     dateLengthRules: any
-    isValid: boolean
-    goodPortion: string
+    validatedResult: Array<{
+      userInput: string
+      isValid: boolean
+      goodPortion: string
+    }>
   }>({
     textInput: '',
     lookupSet: new Set([
@@ -34,8 +65,7 @@ const MerchantDictionary: FunctionComponent = () => {
       M: 2,
       y: 4,
     },
-    isValid: true,
-    goodPortion: '',
+    validatedResult: [],
   })
 
   const isValidPadding = (paddingString: string, keyword: string) => {
@@ -62,6 +92,8 @@ const MerchantDictionary: FunctionComponent = () => {
     return false
   }
 
+  // Checks if dates are the correct format
+  // dd//MM/yyyy or any subset of it
   const isValidDate = (dateString: string, keyword: string) => {
     if (keyword !== 'date' || dateString.length === 0) {
       return false
@@ -92,61 +124,73 @@ const MerchantDictionary: FunctionComponent = () => {
     return isValidDateString
   }
 
-  const setDictionaryMap = (textInput: string) => {
+  const validateInputMap = (textInput: string) => {
     setState({ ...state, textInput })
 
-    const stack: string[] = []
+    const textInputArr = textInput.split('\n')
 
-    let goodPortion = ''
+    const validatedResult = []
 
-    for (const char of textInput) {
-      // If there is no opening bracket, just add to it
-      if (stack.length === 0 && !(char in state.ruleCharacters)) {
-        goodPortion += char
-      } else if (stack.length < 2 && char === '{') {
-        // If there is an opening bracket
-        stack.push(char)
-        goodPortion += char
-      } else if (stack.length >= 1 && char === '}') {
-        // If there is a closing bracket
-        // Pops the whole word, if there are no pipe between two sets of brackets
-        if (state.lookupSet.has(stack[stack.length - 1])) {
-          const poppedWord: string = stack.pop() ?? ''
+    for (const text of textInputArr) {
+      let goodPortion = ''
+      const stack: string[] = []
 
-          goodPortion += poppedWord
-        } else {
-          const splitBracketString = stack[stack.length - 1].split('|')
-
-          if (
-            splitBracketString.length === 3 &&
-            state.lookupSet.has(splitBracketString[0]) &&
-            state.keyWords.has(splitBracketString[1]) &&
-            (isValidPadding(splitBracketString[2], splitBracketString[1]) ||
-              isValidDate(splitBracketString[2], splitBracketString[1]))
-          ) {
+      for (const char of text) {
+        // If there is no opening bracket, just add to it
+        if (stack.length === 0 && !(char in state.ruleCharacters)) {
+          goodPortion += char
+        } else if (stack.length < 2 && char === '{') {
+          // If there is an opening bracket
+          stack.push(char)
+          goodPortion += char
+        } else if (stack.length >= 1 && char === '}') {
+          // If there is a closing bracket
+          // Pops the whole word, if there are no pipe between two sets of brackets
+          if (state.lookupSet.has(stack[stack.length - 1])) {
             const poppedWord: string = stack.pop() ?? ''
 
             goodPortion += poppedWord
-          }
-        }
+          } else {
+            const splitBracketString = stack[stack.length - 1].split('|')
 
-        // Pops the bottom layer bracket
-        if (stack[stack.length - 1] === '{') {
-          stack.pop()
-          goodPortion += '}'
+            if (
+              splitBracketString.length === 3 &&
+              state.lookupSet.has(splitBracketString[0]) &&
+              state.keyWords.has(splitBracketString[1]) &&
+              (isValidPadding(splitBracketString[2], splitBracketString[1]) ||
+                isValidDate(splitBracketString[2], splitBracketString[1]))
+            ) {
+              const poppedWord: string = stack.pop() ?? ''
+
+              goodPortion += poppedWord
+            }
+          }
+
+          // Pops the bottom layer bracket
+          if (stack[stack.length - 1] === '{') {
+            stack.pop()
+            goodPortion += '}'
+          }
+        } else if (
+          stack[0] === stack[1] &&
+          stack[0] === '{' &&
+          !(char in state.ruleCharacters)
+        ) {
+          // Adds to the stack if there are previous brackets, otherwise, append to it
+          stack.length === 2
+            ? stack.push(char)
+            : (stack[stack.length - 1] += char)
         }
-      } else if (
-        stack[0] === stack[1] &&
-        stack[0] === '{' &&
-        !(char in state.ruleCharacters)
-      ) {
-        stack.length === 2
-          ? stack.push(char)
-          : (stack[stack.length - 1] += char)
       }
+
+      validatedResult.push({
+        userInput: text,
+        goodPortion,
+        isValid: stack.length === 0,
+      })
     }
 
-    setState({ ...state, isValid: stack.length === 0, goodPortion })
+    setState({ ...state, validatedResult })
   }
 
   return (
@@ -164,13 +208,19 @@ const MerchantDictionary: FunctionComponent = () => {
         <Textarea
           label="Merchant Defined Information"
           onChange={(e: any) => {
-            setDictionaryMap(e.target.value)
+            validateInputMap(e.target.value)
           }}
         >
           {state.textInput}
         </Textarea>
-        <Tag type="success">{state.isValid.toString()}</Tag>
-        <Tag type="success">{state.goodPortion}</Tag>
+        <div className="mb5">
+          <Table
+            fullWidth
+            schema={defaultSchema}
+            items={state.validatedResult}
+            density="high"
+          />
+        </div>
       </div>
     </div>
   )
