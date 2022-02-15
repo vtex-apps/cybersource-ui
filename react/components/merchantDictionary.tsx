@@ -160,7 +160,8 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
 
             if (
               splitBracketString.length === 3 &&
-              state.lookupSet.has(splitBracketString[0]) &&
+              (state.lookupSet.has(splitBracketString[0]) ||
+                splitBracketString[0].length === 0) &&
               state.keyWords.has(splitBracketString[1]) &&
               (isValidPadding(splitBracketString[2], splitBracketString[1]) ||
                 isValidDate(splitBracketString[2], splitBracketString[1]))
