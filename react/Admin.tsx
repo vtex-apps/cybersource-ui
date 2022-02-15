@@ -42,6 +42,7 @@ const Admin: FC = () => {
     EnableTransactionPosting: false,
     SalesChannelExclude: '',
     EnableTax: false,
+    MerchantDictionary: [],
   })
 
   const [initialAdminState, setAdminState] = useState({
@@ -132,6 +133,8 @@ const Admin: FC = () => {
       </Layout>
     )
   }
+
+  console.log(data)
 
   return (
     <ToastProvider positioning="window">
@@ -342,7 +345,13 @@ const Admin: FC = () => {
                   onClick={() => setAdminState({ currentTab: 2 })}
                 >
                   <div className="pt7">
-                    <MerchantDictionary />
+                    <MerchantDictionary
+                      handleSaveSettings={handleSaveSettings}
+                      showToast={showToast}
+                      settingsState={settingsState}
+                      setSettingsState={setSettingsState}
+                      settingsLoading={settingsLoading}
+                    />
                   </div>
                 </Tab>
               </Tabs>

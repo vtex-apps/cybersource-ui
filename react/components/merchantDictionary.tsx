@@ -1,8 +1,9 @@
 import type { FunctionComponent } from 'react'
 import React, { useState } from 'react'
-import { Table, Tag, Textarea } from 'vtex.styleguide'
+import { FormattedMessage } from 'react-intl'
+import { Button, Table, Tag, Textarea } from 'vtex.styleguide'
 
-const MerchantDictionary: FunctionComponent = () => {
+const MerchantDictionary: FunctionComponent<any> = (props: any) => {
   const defaultSchema = {
     properties: {
       userInput: {
@@ -44,7 +45,11 @@ const MerchantDictionary: FunctionComponent = () => {
       goodPortion: string
     }>
   }>({
-    textInput: '',
+    textInput: props.settingsState.MerchantDictionary.reduce(
+      (prev: any, curr: any) => {
+        return { userInput: `${prev.userInput}\n${curr.userInput}` }
+      }
+    ).userInput,
     lookupSet: new Set([
       'currency',
       'card',
@@ -65,7 +70,7 @@ const MerchantDictionary: FunctionComponent = () => {
       M: 2,
       y: 4,
     },
-    validatedResult: [],
+    validatedResult: props.settingsState.MerchantDictionary ?? [],
   })
 
   const isValidPadding = (paddingString: string, keyword: string) => {
@@ -209,6 +214,10 @@ const MerchantDictionary: FunctionComponent = () => {
           label="Merchant Defined Information"
           onChange={(e: any) => {
             validateInputMap(e.target.value)
+            props.setSettingsState({
+              ...props.settingsState,
+              MerchantDictionary: state.validatedResult,
+            })
           }}
         >
           {state.textInput}
@@ -222,6 +231,15 @@ const MerchantDictionary: FunctionComponent = () => {
           />
         </div>
       </div>
+      <Button
+        variation="primary"
+        onClick={() => {
+          props.handleSaveSettings(props.showToast)
+        }}
+        isLoading={props.settingsLoading}
+      >
+        <FormattedMessage id="admin/cybersource.saveSettings.buttonText" />
+      </Button>
     </div>
   )
 }
