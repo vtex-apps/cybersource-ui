@@ -134,8 +134,6 @@ const Admin: FC = () => {
     )
   }
 
-  console.log(data)
-
   return (
     <ToastProvider positioning="window">
       <ToastConsumer>

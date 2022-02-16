@@ -1,7 +1,10 @@
 import type { FunctionComponent } from 'react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useQuery } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
-import { Button, Table, Tag, Textarea } from 'vtex.styleguide'
+import { Button, Collapsible, Table, Tag, Textarea } from 'vtex.styleguide'
+
+import MerchantDefinedFields from '../queries/merchantDefinedFields.gql'
 
 const MerchantDictionary: FunctionComponent<any> = (props: any) => {
   const defaultSchema = {
@@ -44,24 +47,13 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
       isValid: boolean
       goodPortion: string
     }>
+    isOpen: boolean
   }>({
-    textInput: props.settingsState.MerchantDictionary.reduce(
-      (prev: any, curr: any) => {
+    textInput:
+      props.settingsState.MerchantDictionary.reduce((prev: any, curr: any) => {
         return { userInput: `${prev.userInput}\n${curr.userInput}` }
-      }
-    ).userInput,
-    lookupSet: new Set([
-      'currency',
-      'card',
-      'devicefingerprint',
-      'installments',
-      'installmentsinterestrate',
-      'installmentsvalue',
-      'ipaddress',
-      'merchantname',
-      'orderid',
-      'paymentid',
-    ]),
+      }).userInput || '',
+    lookupSet: new Set([]),
     keyWords: new Set(['Pad', 'date']),
     inputMapping: {},
     ruleCharacters: { '{': '}', '}': '{' },
@@ -71,7 +63,21 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
       y: 4,
     },
     validatedResult: props.settingsState.MerchantDictionary ?? [],
+    isOpen: false,
   })
+
+  const { data } = useQuery(MerchantDefinedFields, {
+    ssr: false,
+  })
+
+  useEffect(() => {
+    if (data?.merchantDefinedFields.length > 0) {
+      setState((prevState: any) => ({
+        ...prevState,
+        lookupSet: new Set(data.merchantDefinedFields),
+      }))
+    }
+  }, [data])
 
   const isValidPadding = (paddingString: string, keyword: string) => {
     if (keyword !== 'Pad' || paddingString.length === 0) {
@@ -130,8 +136,6 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
   }
 
   const validateInputMap = (textInput: string) => {
-    setState({ ...state, textInput })
-
     const textInputArr = textInput.split('\n')
 
     const validatedResult = []
@@ -196,33 +200,47 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
       })
     }
 
-    setState({ ...state, validatedResult })
+    setState({ ...state, validatedResult, textInput })
+
+    props.setSettingsState({
+      ...props.settingsState,
+      MerchantDictionary: state.validatedResult,
+    })
   }
 
   return (
     <div>
       <div className="mb6">
         <div>
-          {Array.from(state.lookupSet).map((keyword: string) => {
-            return (
-              <Tag type="success" key={keyword}>
-                {keyword}
-              </Tag>
-            )
-          })}
+          <Collapsible
+            header={
+              <span className="c-action-primary hover-c-action-primary fw5">
+                Show All Referencable Words
+              </span>
+            }
+            onClick={(e: any) => {
+              setState({ ...state, isOpen: e.target.isOpen })
+            }}
+            isOpen={state.isOpen}
+          >
+            {Array.from(state.lookupSet).map((keyword: string) => {
+              return (
+                <span key={keyword} className="pa3">
+                  <Tag type="success" variation="low">
+                    {keyword}
+                  </Tag>
+                </span>
+              )
+            })}
+          </Collapsible>
         </div>
         <Textarea
           label="Merchant Defined Information"
           onChange={(e: any) => {
             validateInputMap(e.target.value)
-            props.setSettingsState({
-              ...props.settingsState,
-              MerchantDictionary: state.validatedResult,
-            })
           }}
-        >
-          {state.textInput}
-        </Textarea>
+          value={state.textInput}
+        />
         <div className="mb5">
           <Table
             fullWidth
