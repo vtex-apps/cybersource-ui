@@ -17,5 +17,15 @@
   "admin/cybersource.settings.EnableTax.label": "Enable Tax Calculations",
   "admin/cybersource.settings.EnableTax.helpText": "Enable Tax Placeholder",
   "admin/cybersource.settings.enableTransactionPosting.helpText": "Enable transaction posting",
-  "admin/cybersource.settings.salesChannelExclude.helpText": "Comma separated list of sales channel ids to exclude."
+  "admin/cybersource.settings.successfulPortion": "Successful Portion",
+  "admin/cybersource.settings.userInput": "User Input",
+  "admin/cybersource.settings.isValid": "Valid",
+  "admin/cybersource.settings.valid": "Valid",
+  "admin/cybersource.settings.invalid": "Invalid",
+  "admin/cybersource.settings.showRefenceWords": "Show All Referencable Words",
+  "admin/cybersource.settings.merchantDefinedInfo": "Merchant Defined Information",
+  "admin/cybersource.settings.merchantDefinedFields": "Merchant Defined Fields",
+  "admin/cybersource.settings.merchantFieldsReadme": "Read Me",
+  "admin/cybersource.settings.readmeContent": "• You can set merchant defined fields on this page. With every line in the text area, you can input a new custom merchant defined field. See application read me for further instructions.",
+  "admin/cybersource.settings.readmeInstructions": "• Any values outside of the curly brackets will be taken at direct value while any values between the curly brackets must be in the following format: Reference Word|Modification Word|Values"
 }

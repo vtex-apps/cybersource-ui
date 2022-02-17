@@ -50,6 +50,9 @@ const Admin: FC = () => {
   })
 
   const { data } = useQuery(AppSettings, {
+    variables: {
+      version: process.env.VTEX_APP_VERSION,
+    },
     ssr: false,
   })
 
@@ -86,6 +89,7 @@ const Admin: FC = () => {
 
       await saveSettings({
         variables: {
+          version: process.env.VTEX_APP_VERSION,
           settings: JSON.stringify(settingsState),
         },
       }).then(() => {
@@ -112,7 +116,7 @@ const Admin: FC = () => {
   useEffect(() => {
     if (!data?.appSettings?.message) return
 
-    const parsedSettings = JSON.parse(data.appSettings.message)
+    const parsedSettings: any = JSON.parse(data.appSettings.message)
 
     setSettingsState(parsedSettings)
   }, [data])
@@ -338,7 +342,9 @@ const Admin: FC = () => {
                   </div>
                 </Tab>
                 <Tab
-                  label="Merchant Defined Fields"
+                  label={formatMessage({
+                    id: 'admin/cybersource.settings.merchantDefinedFields',
+                  })}
                   active={initialAdminState.currentTab === 2}
                   onClick={() => setAdminState({ currentTab: 2 })}
                 >

@@ -1,35 +1,47 @@
 import type { FunctionComponent } from 'react'
 import React, { useState, useEffect } from 'react'
 import { useQuery } from 'react-apollo'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { Button, Collapsible, Table, Tag, Textarea } from 'vtex.styleguide'
 
 import MerchantDefinedFields from '../queries/merchantDefinedFields.gql'
 
 const MerchantDictionary: FunctionComponent<any> = (props: any) => {
+  const { formatMessage } = useIntl()
+
   const defaultSchema = {
     properties: {
       userInput: {
-        title: 'User Input',
+        title: formatMessage({
+          id: 'admin/cybersource.settings.userInput',
+        }),
         width: 300,
       },
       isValid: {
-        title: 'Valid',
+        title: formatMessage({
+          id: 'admin/cybersource.settings.isValid',
+        }),
         minWidth: 100,
         cellRenderer: ({ cellData }: any) => {
           return cellData ? (
             <Tag type="success" variation="low">
-              Valid
+              {formatMessage({
+                id: 'admin/cybersource.settings.valid',
+              })}
             </Tag>
           ) : (
             <Tag type="error" variation="low">
-              Invalid
+              {formatMessage({
+                id: 'admin/cybersource.settings.invalid',
+              })}
             </Tag>
           )
         },
       },
       goodPortion: {
-        title: 'Successful Portion',
+        title: formatMessage({
+          id: 'admin/cybersource.settings.successfulPortion',
+        }),
         minWidth: 100,
       },
     },
@@ -48,11 +60,16 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
       goodPortion: string
     }>
     isOpen: boolean
+    isReadmeOpen: boolean
   }>({
     textInput:
-      props.settingsState.MerchantDictionary.reduce((prev: any, curr: any) => {
-        return { userInput: `${prev.userInput}\n${curr.userInput}` }
-      }).userInput || '',
+      props.settingsState.MerchantDictionary.length > 0
+        ? props.settingsState.MerchantDictionary.reduce(
+            (prev: any, curr: any) => {
+              return { userInput: `${prev.userInput}\n${curr.userInput}` }
+            }
+          ).userInput
+        : '',
     lookupSet: new Set([]),
     keyWords: new Set(['Pad', 'date']),
     inputMapping: {},
@@ -64,6 +81,7 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
     },
     validatedResult: props.settingsState.MerchantDictionary ?? [],
     isOpen: false,
+    isReadmeOpen: false,
   })
 
   const { data } = useQuery(MerchantDefinedFields, {
@@ -211,11 +229,13 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
   return (
     <div>
       <div className="mb6">
-        <div>
+        <div className="pa3">
           <Collapsible
             header={
               <span className="c-action-primary hover-c-action-primary fw5">
-                Show All Referencable Words
+                {formatMessage({
+                  id: 'admin/cybersource.settings.showRefenceWords',
+                })}
               </span>
             }
             onClick={(e: any) => {
@@ -234,8 +254,36 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
             })}
           </Collapsible>
         </div>
+        <div className="pa3">
+          <Collapsible
+            header={
+              <span className="c-action-primary hover-c-action-primary fw5">
+                {formatMessage({
+                  id: 'admin/cybersource.settings.merchantFieldsReadme',
+                })}
+              </span>
+            }
+            onClick={(e: any) => {
+              setState({ ...state, isReadmeOpen: e.target.isOpen })
+            }}
+            isOpen={state.isReadmeOpen}
+          >
+            <div className="pa2">
+              {formatMessage({
+                id: 'admin/cybersource.settings.readmeContent',
+              })}
+            </div>
+            <div className="pa2">
+              {formatMessage({
+                id: 'admin/cybersource.settings.readmeInstructions',
+              })}
+            </div>
+          </Collapsible>
+        </div>
         <Textarea
-          label="Merchant Defined Information"
+          label={formatMessage({
+            id: 'admin/cybersource.settings.merchantDefinedInfo',
+          })}
           onChange={(e: any) => {
             validateInputMap(e.target.value)
           }}
