@@ -257,12 +257,6 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
               values={{ lineBreak: <br /> }}
             />
           </div>
-          <div className="pv2">
-            <FormattedMessage
-              id="admin/cybersource.settings.readmeInstructions"
-              values={{ lineBreak: <br /> }}
-            />
-          </div>
         </PageBlock>
       </div>
       <div className="mb6">
