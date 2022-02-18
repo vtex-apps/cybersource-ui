@@ -25,7 +25,8 @@
   "admin/cybersource.settings.showRefenceWords": "Show All Referencable Words",
   "admin/cybersource.settings.merchantDefinedInfo": "Merchant Defined Information",
   "admin/cybersource.settings.merchantDefinedFields": "Merchant Defined Fields",
-  "admin/cybersource.settings.merchantFieldsReadme": "Read Me",
-  "admin/cybersource.settings.readmeContent": "• You can set merchant defined fields on this page. With every line in the text area, you can input a new custom merchant defined field. See application read me for further instructions.",
-  "admin/cybersource.settings.readmeInstructions": "• Any values outside of the curly brackets will be taken at direct value while any values between the curly brackets must be in the following format: Reference Word|Modification Word|Values"
+  "admin/cybersource.settings.merchantFieldsReadme": "Adding Merchant Defined Fields",
+  "admin/cybersource.settings.readmeContent": "You can create merchant defined fields on this page that will be included when sending VTEX orders to CyberSource.{lineBreak}Each line of the text area will be treated as a new merchant defined field; multiple values on a single line will be sent as part of the same field. See the app's documentation for further instructions.",
+  "admin/cybersource.settings.readmeInstructions": "Any characters outside of double curly brackets will be interpreted as a static value.{lineBreak}Meanwhile any values inside double curly brackets must be in the following format: Reference Word|Modification Word|Values",
+  "admin/cybersource.settings.readmeLink": "Full Documentation Link"
 }

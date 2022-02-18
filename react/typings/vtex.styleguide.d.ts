@@ -41,4 +41,5 @@ declare module 'vtex.styleguide' {
   export const Divider
   export const PageBlock
   export const Toggle
+  export const Link
 }

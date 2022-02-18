@@ -2,7 +2,15 @@ import type { FunctionComponent } from 'react'
 import React, { useState, useEffect } from 'react'
 import { useQuery } from 'react-apollo'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Button, Collapsible, Table, Tag, Textarea } from 'vtex.styleguide'
+import {
+  Button,
+  Collapsible,
+  PageBlock,
+  Table,
+  Tag,
+  Textarea,
+  Link,
+} from 'vtex.styleguide'
 
 import MerchantDefinedFields from '../queries/merchantDefinedFields.gql'
 
@@ -60,7 +68,6 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
       goodPortion: string
     }>
     isOpen: boolean
-    isReadmeOpen: boolean
   }>({
     textInput:
       props.settingsState.MerchantDictionary.length > 0
@@ -81,7 +88,6 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
     },
     validatedResult: props.settingsState.MerchantDictionary ?? [],
     isOpen: false,
-    isReadmeOpen: false,
   })
 
   const { data } = useQuery(MerchantDefinedFields, {
@@ -228,6 +234,37 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
 
   return (
     <div>
+      <div className="pa3 bg-muted-5">
+        <PageBlock
+          variation="annotated"
+          title={formatMessage({
+            id: 'admin/cybersource.settings.merchantFieldsReadme',
+          })}
+          subtitle={
+            <Link
+              target="_blank"
+              href="https://developers.vtex.com/vtex-developer-docs/docs/vtex-cybersource-ui"
+            >
+              {formatMessage({
+                id: 'admin/cybersource.settings.readmeLink',
+              })}
+            </Link>
+          }
+        >
+          <div className="pv2">
+            <FormattedMessage
+              id="admin/cybersource.settings.readmeContent"
+              values={{ lineBreak: <br /> }}
+            />
+          </div>
+          <div className="pv2">
+            <FormattedMessage
+              id="admin/cybersource.settings.readmeInstructions"
+              values={{ lineBreak: <br /> }}
+            />
+          </div>
+        </PageBlock>
+      </div>
       <div className="mb6">
         <div className="pa3">
           <Collapsible
@@ -252,32 +289,6 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
                 </span>
               )
             })}
-          </Collapsible>
-        </div>
-        <div className="pa3">
-          <Collapsible
-            header={
-              <span className="c-action-primary hover-c-action-primary fw5">
-                {formatMessage({
-                  id: 'admin/cybersource.settings.merchantFieldsReadme',
-                })}
-              </span>
-            }
-            onClick={(e: any) => {
-              setState({ ...state, isReadmeOpen: e.target.isOpen })
-            }}
-            isOpen={state.isReadmeOpen}
-          >
-            <div className="pa2">
-              {formatMessage({
-                id: 'admin/cybersource.settings.readmeContent',
-              })}
-            </div>
-            <div className="pa2">
-              {formatMessage({
-                id: 'admin/cybersource.settings.readmeInstructions',
-              })}
-            </div>
           </Collapsible>
         </div>
         <Textarea
