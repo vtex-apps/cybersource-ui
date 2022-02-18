@@ -1,8 +1,8 @@
 mutation SaveAppSettings($version: String, $settings: String) {
   saveAppSettings(
-    app: "vtex.cybersource"
-    version: $version
+    app: "vtex.cybersource-ui"
     settings: $settings
+    version: $version
   ) @context(provider: "vtex.apps-graphql") {
     message
   }
