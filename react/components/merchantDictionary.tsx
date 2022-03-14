@@ -70,7 +70,7 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
     isOpen: boolean
   }>({
     textInput:
-      props.settingsState.MerchantDictionary.length > 0
+      props?.settingsState?.MerchantDictionary?.length > 0
         ? props.settingsState.MerchantDictionary.reduce(
             (prev: any, curr: any) => {
               return { userInput: `${prev.userInput}\n${curr.userInput}` }
