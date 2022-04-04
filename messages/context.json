@@ -27,5 +27,14 @@
   "admin/cybersource.settings.merchantDefinedFields": "Merchant Defined Fields",
   "admin/cybersource.settings.merchantFieldsReadme": "Adding Merchant Defined Fields",
   "admin/cybersource.settings.readmeContent": "You can create merchant defined fields on this page that will be included when sending VTEX orders to CyberSource.{lineBreak}{lineBreak}Each line of the text area will be treated as a new merchant defined field; multiple values on a single line will be sent as part of the same field. See the app's documentation for further instructions.{lineBreak}{lineBreak}Any characters outside of double curly brackets will be interpreted as a static value.{lineBreak}Meanwhile any values inside double curly brackets must be in the following format: Reference Word|Modification Word|Values",
-  "admin/cybersource.settings.readmeLink": "Full Documentation Link"
+  "admin/cybersource.settings.readmeLink": "Full Documentation Link",
+  "admin/cybersource.settings.reports.reports.label": "Reports",
+  "admin/cybersource.settings.reports.reportsDay.label": "Reports Day",
+  "admin/cybersource.settings.reports.conversionTime.label": "Conversion Time",
+  "admin/cybersource.settings.reports.merchantReferenceNumber.label": "Merchant Reference Number",
+  "admin/cybersource.settings.reports.newDecision.label": "New Decision",
+  "admin/cybersource.settings.reports.originalDecision.label": "Original Decision",
+  "admin/cybersource.settings.reports.reviewer.label": "Reviewer",
+  "admin/cybersource.settings.reports.reviewerComments.label": "Reviewer Comments",
+  "admin/cybersource.settings.reports.noReports.label": "There is no reports here!"
 }
