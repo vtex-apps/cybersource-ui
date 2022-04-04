@@ -1,0 +1,12 @@
+query Reports($startDate: String, $endDate: String) {
+  conversionReport(startDate: $startDate, endDate: $endDate) {
+    conversionDetails {
+      conversionTime
+      merchantReferenceNumber
+      newDecision
+      originalDecision
+      reviewer
+      reviewerComments
+    }
+  }
+}
