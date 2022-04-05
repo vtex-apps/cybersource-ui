@@ -21,7 +21,7 @@
   "dependencies": {
     "vtex.styleguide": "9.x",
     "vtex.apps-graphql": "2.x",
-    "vtex.cybersource": "2.x"
+    "vtex.cybersource": "1.x"
   },
   "billingOptions": {
     "termsURL": "https://compliance.vtex.com/gdpr/policies/vtex-privacy-policy",
