@@ -21,6 +21,7 @@ import { Link } from 'vtex.render-runtime'
 import { useQuery, useMutation } from 'react-apollo'
 
 import MerchantDictionary from './components/merchantDictionary'
+import Reports from './components/Reports'
 import M_INIT_CONFIG from './mutations/InitConfiguration.gql'
 import RemoveConfiguration from './mutations/RemoveConfiguration.gql'
 import AppSettings from './queries/appSettings.gql'
@@ -356,6 +357,17 @@ const Admin: FC = () => {
                       setSettingsState={setSettingsState}
                       settingsLoading={settingsLoading}
                     />
+                  </div>
+                </Tab>
+                <Tab
+                  label={formatMessage({
+                    id: 'admin/cybersource.settings.reports.reports.label',
+                  })}
+                  active={initialAdminState.currentTab === 3}
+                  onClick={() => setAdminState({ currentTab: 3 })}
+                >
+                  <div className="pt7">
+                    <Reports />
                   </div>
                 </Tab>
               </Tabs>
