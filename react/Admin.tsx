@@ -42,6 +42,8 @@ const Admin: FC = () => {
     Region: '',
     EnableTransactionPosting: false,
     SalesChannelExclude: '',
+    ShippingProductCode: '',
+    NexusRegions: '',
     EnableTax: false,
     MerchantDictionary: [],
   })
@@ -327,6 +329,40 @@ const Admin: FC = () => {
                           }
                           helpText={formatMessage({
                             id: 'admin/cybersource.settings.salesChannelExclude.helpText',
+                          })}
+                        />
+                      </section>
+                      <section className="pb4 mt4">
+                        <Input
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.shippingProductCode.label',
+                          })}
+                          value={settingsState.ShippingProductCode}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                            setSettingsState({
+                              ...settingsState,
+                              ShippingProductCode: e.currentTarget.value,
+                            })
+                          }
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.shippingProductCode.helpText',
+                          })}
+                        />
+                      </section>
+                      <section className="pb4 mt4">
+                        <Input
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.nexusRegions.label',
+                          })}
+                          value={settingsState.NexusRegions}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                            setSettingsState({
+                              ...settingsState,
+                              NexusRegions: e.currentTarget.value,
+                            })
+                          }
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.nexusRegions.helpText',
                           })}
                         />
                       </section>
