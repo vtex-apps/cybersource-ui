@@ -19,6 +19,7 @@ This app uses Cybersource REST API to process Payments, Risk Management, and Tax
 	- Choose `REST - Shared Secret` and Generate Key
 
 3. In VTEX Admin, select Cybersource App and enter key values.
+	![image](https://user-images.githubusercontent.com/47258865/178300211-3d3eadf2-6f44-4db4-95dd-76fae2bfebc4.png)
 
 4. Transactions -> Payments -> Settings
 	- Select Gateway Affiliations and click the green plus
@@ -26,6 +27,7 @@ This app uses Cybersource REST API to process Payments, Risk Management, and Tax
 	- Application Key & Application Token are not used.
 	- Payment capture sets when the Payments system attempts to caoture funds.  Capture Setting of Immediate Capture will Authorize and Capture in a single call.
 	- Merchant Id, Merchant Key, and Shared Secret Key settings on Gateway will override the settings on the main app settings page.
+	![image](https://user-images.githubusercontent.com/47258865/178299999-a27149a6-f937-4602-96ed-d232d8795095.png)
 
 5. Payment Conditions
 	- Add New Payment using Gateway
