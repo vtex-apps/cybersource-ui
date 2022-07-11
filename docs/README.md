@@ -23,12 +23,15 @@ This app uses Cybersource REST API to process Payments, Risk Management, and Tax
 4. Transactions -> Payments -> Settings
 	- Select Gateway Affiliations and click the green plus
 	- Select Cybersource (Ensure the url is `/admin/pci-gateway/#/affiliations/vtex-cybersource-v1/`)
+	- Application Key & Application Token are not used.
+	- Payment capture sets when the Payments system attempts to caoture funds.  Capture Setting of Immediate Capture will Authorize and Capture in a single call.
+	- Merchant Id, Merchant Key, and Shared Secret Key settings on Gateway will override the settings on the main app settings page.
 
 5. Payment Conditions
 	- Add New Payment using Gateway
 
 Device Fingerprint
-Replace {{ORG_ID}} and {{MERCHANT_ID}}
+Add the following code to Checkout UI Custom and replace {{ORG_ID}} and {{MERCHANT_ID}} with the appropriate values.
 ```
 function addsDeviceFingerPrint() {
   if (!window.vtex) return;
