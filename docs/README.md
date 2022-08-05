@@ -18,7 +18,7 @@ This app uses Cybersource REST API to process Payments, Risk Management, and Tax
 	- Payment Configuration -> Key Management -> Generate Key
 	- Choose `REST - Shared Secret` and Generate Key
 
-3. In VTEX Admin, select Cybersource App and enter key values.
+3. In VTEX Admin, Transactions -> Cybersource, enter key values.
 	![image](https://user-images.githubusercontent.com/47258865/178300211-3d3eadf2-6f44-4db4-95dd-76fae2bfebc4.png)
 
 4. Transactions -> Payments -> Settings
