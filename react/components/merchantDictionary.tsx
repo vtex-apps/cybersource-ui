@@ -78,7 +78,7 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
           ).userInput
         : '',
     lookupSet: new Set([]),
-    keyWords: new Set(['PAD', 'DATE','AGE', 'EQUALS']),
+    keyWords: new Set(['PAD', 'DATE', 'AGE', 'EQUALS']),
     inputMapping: {},
     ruleCharacters: { '{': '}', '}': '{' },
     dateLengthRules: {
@@ -134,7 +134,7 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
               splitBracketString.length === 3 &&
               (state.lookupSet.has(splitBracketString[0]) ||
                 splitBracketString[0].length === 0) &&
-              state.keyWords.has(splitBracketString[1]) 
+                state.keyWords.has(splitBracketString[1]) 
             ) {
               const poppedWord: string = stack.pop() ?? ''
 
