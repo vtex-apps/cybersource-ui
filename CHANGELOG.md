@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+- Removed date and padding MDD validation to allow for additional actions
+
 ## [0.1.4] - 2022-07-11
 
 ### Changed

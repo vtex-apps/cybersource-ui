@@ -78,12 +78,12 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
           ).userInput
         : '',
     lookupSet: new Set([]),
-    keyWords: new Set(['Pad', 'date']),
+    keyWords: new Set(['PAD', 'DATE','AGE', 'EQUALS']),
     inputMapping: {},
     ruleCharacters: { '{': '}', '}': '{' },
     dateLengthRules: {
       d: 2,
-      M: 2,
+      M: 4,
       y: 4,
     },
     validatedResult: props.settingsState.MerchantDictionary ?? [],
@@ -102,62 +102,6 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
       }))
     }
   }, [data])
-
-  const isValidPadding = (paddingString: string, keyword: string) => {
-    if (keyword !== 'Pad' || paddingString.length === 0) {
-      return false
-    }
-
-    const splitPaddingString = paddingString.split(':')
-
-    if (splitPaddingString.length === 1) {
-      return true
-    }
-
-    if (
-      splitPaddingString.length === 2 &&
-      splitPaddingString[1].length === 1 &&
-      splitPaddingString[0].match('^\\d+$') &&
-      splitPaddingString[0].length > 0 &&
-      splitPaddingString[0].length < 3
-    ) {
-      return true
-    }
-
-    return false
-  }
-
-  // Checks if dates are the correct format
-  // dd//MM/yyyy or any subset of it
-  const isValidDate = (dateString: string, keyword: string) => {
-    if (keyword !== 'date' || dateString.length === 0) {
-      return false
-    }
-
-    const dateArr: string[] = dateString.split('/')
-
-    if (dateArr.length > 3) {
-      return false
-    }
-
-    let isValidDateString = false
-
-    for (const dateField of dateArr) {
-      if (
-        dateField.length > 0 &&
-        dateField.charAt(0) in state.dateLengthRules &&
-        dateField.split(dateField.charAt(0)).length - 1 === dateField.length &&
-        dateField.length <= state.dateLengthRules[dateField.charAt(0)]
-      ) {
-        isValidDateString = true
-      } else {
-        isValidDateString = false
-        break
-      }
-    }
-
-    return isValidDateString
-  }
 
   const validateInputMap = (textInput: string) => {
     const textInputArr = textInput.split('\n')
@@ -190,9 +134,7 @@ const MerchantDictionary: FunctionComponent<any> = (props: any) => {
               splitBracketString.length === 3 &&
               (state.lookupSet.has(splitBracketString[0]) ||
                 splitBracketString[0].length === 0) &&
-              state.keyWords.has(splitBracketString[1]) &&
-              (isValidPadding(splitBracketString[2], splitBracketString[1]) ||
-                isValidDate(splitBracketString[2], splitBracketString[1]))
+              state.keyWords.has(splitBracketString[1]) 
             ) {
               const poppedWord: string = stack.pop() ?? ''
 
