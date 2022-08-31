@@ -40,6 +40,7 @@ const Admin: FC = () => {
     SharedSecretKey: '',
     Processor: '',
     Region: '',
+    CustomNsu: '',
     EnableTransactionPosting: false,
     SalesChannelExclude: '',
     ShippingProductCode: '',
@@ -274,6 +275,23 @@ const Admin: FC = () => {
                               Region: e.currentTarget.value,
                             })
                           }
+                        />
+                      </section>
+                      <section className="pb4 mt4">
+                        <Input
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.customNsu.label',
+                          })}
+                          value={settingsState.CustomNsu}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                            setSettingsState({
+                              ...settingsState,
+                              CustomNsu: e.currentTarget.value,
+                            })
+                          }
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.customNsu.helpText',
+                          })}
                         />
                       </section>
                       <section className="pv4">
