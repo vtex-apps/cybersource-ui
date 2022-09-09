@@ -40,6 +40,7 @@ const Admin: FC = () => {
     SharedSecretKey: '',
     Processor: '',
     Region: '',
+    OrderSuffix: '',
     CustomNsu: '',
     EnableTransactionPosting: false,
     SalesChannelExclude: '',
@@ -275,6 +276,23 @@ const Admin: FC = () => {
                               Region: e.currentTarget.value,
                             })
                           }
+                        />
+                      </section>
+                      <section className="pb4 mt4">
+                        <Input
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.orderSuffix.label',
+                          })}
+                          value={settingsState.OrderSuffix}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                            setSettingsState({
+                              ...settingsState,
+                              OrderSuffix: e.currentTarget.value,
+                            })
+                          }
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.orderSuffix.helpText',
+                          })}
                         />
                       </section>
                       <section className="pb4 mt4">
