@@ -79,6 +79,7 @@ const Admin: FC = () => {
     { value: 'PE', label: 'Peru' },
     { value: 'MX', label: 'Mexico' },
     { value: 'BR', label: 'Brasil' },
+    { value: 'EC', label: 'Ecuador' },
     { value: 'Other', label: 'Other' },
   ]
 

@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Added Ecuador to region select
+
 ## [0.3.0] - 2022-09-20
 
 ### Added
