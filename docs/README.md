@@ -6,9 +6,9 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-# Cybersource IO
+# CyberSource IO
 
-This app uses Cybersource REST API to process Payments, Risk Management, and Taxes
+This app uses the CyberSource REST API to process payments, risk management, and taxes.
 
 ## Configuration
 
@@ -18,22 +18,48 @@ This app uses Cybersource REST API to process Payments, Risk Management, and Tax
 	- Payment Configuration -> Key Management -> Generate Key
 	- Choose `REST - Shared Secret` and Generate Key
 
-3. In VTEX Admin, Transactions -> Cybersource, enter key values.
+3. In VTEX Admin, search for "Cybersource" to find the admin panel as shown below:
 	![image](https://user-images.githubusercontent.com/47258865/178300211-3d3eadf2-6f44-4db4-95dd-76fae2bfebc4.png)
 
-4. Transactions -> Payments -> Settings
-	- Select Gateway Affiliations and click the green plus
-	- Select Cybersource (Ensure the url is `/admin/pci-gateway/#/affiliations/vtex-cybersource-v1/`)
-	- Application Key & Application Token are not used.
-	- Payment capture sets when the Payments system attempts to caoture funds.  Capture Setting of Immediate Capture will Authorize and Capture in a single call.
-	- Merchant Id, Merchant Key, and Shared Secret Key settings on Gateway will override the settings on the main app settings page.
+  - Enter your `Merchant ID`
+  - Enter your `Merchant Key` and `Shared Secret Key` from step 2
+  - Select a `Processor` (choose "Other" if your processor does not appear in the list) 
+  - Select a `Region` (choose "Other" if your region does not appear in the list)
+  - Optionally enter a `Reference Suffix` (by default, orders in CyberSource's system will be associated with the VTEX order group ID, but this setting can be used to append a suffix such as "-01")
+  - Optionally enter a `Custom NSU`
+  - Choose whether to `Enable Tax Calculations` if you wish to use CyberSource as your tax calculation provider in checkout
+  - Choose whether to `Enable Transaction Posting` to post completed transactions for tax reporting
+  - Optionally enter any `Sales Channels to Exclude from CyberSource`
+  - Optionally enter a `Shipping Product Code` for purposes of shipping tax calculation
+  - Optionally enter a list of `Tax Nexus Regions`
+  - Click `Save Settings`
+
+4. In VTEX Admin, navigate to Payment Settings (`/admin/pci-gateway/#/rules`)
+	- Select the Gateway Affiliations tab and click the green plus to add a new affiliation
+	- From the list of gateways, select `Cybersource IO`
+	- Configure the affiliation as follows: 
+    - Leave `Application Key` & `Application Token` blank (they are not used)
+	  - Select the desired `Payment capture` behavior: 
+      - "Use Behavior Recommended By The Payment Processor" and "Immediate: Automatic Capture After Payment Authorization" are equivalent
+      - If you want more control over payment capture, select "Deactivated"
+      - To immediately authorize and capture in a single API call, select "Use Behavior Recommended..." and set the `Capture Setting` dropdown to "Immediate Capture"
+	  - Enter your `Company Name` and `Company Tax Id`
+    - `Merchant Id`, `Merchant Key`, and `Shared Secret Key` are optional overrides; if left blank, the connector will read these values from the settings entered in step 3
+  - Click `Save`
 	![image](https://user-images.githubusercontent.com/47258865/178299999-a27149a6-f937-4602-96ed-d232d8795095.png)
 
-5. Payment Conditions
-	- Add New Payment using Gateway
+5. In VTEX Admin, still in the Payment Settings interface
+	- Select the Payment Conditions tab
+  - Click the green plus to add a new payment condition for the desired credit card type (ex. Visa)
+  - In `Process with affiliation`, choose `Cybersource IO` (or if you have customized the name of the affiliation, select the name you entered)
+  - Click `Save`
+  - Repeat as needed for other credit card types
+  - If you previously created credit card payment rules for other gateways (including the legacy CyberSource connector), you may set these rules to `Inactive`. Transactions in progress that were started on that connector will still be processed by it even if it is inactive; only new transactions will be processed by the new connector. 
+    - If you need to roll back to the previous connector for any reason, simply set its payment rule(s) to `Active` and set the `Cybersource IO` payment rule(s) to `Inactive`.   
 
-Device Fingerprint
-Add the following code to Checkout UI Custom and replace {{ORG_ID}} and {{MERCHANT_ID}} with the appropriate values.
+### Optional: Device Fingerprint
+
+Add the following code to your checkout custom JS and replace `{{ORG_ID}}` and `{{MERCHANT_ID}}` with the appropriate values.
 ```
 function addsDeviceFingerPrint() {
   if (!window.vtex) return;
@@ -62,12 +88,12 @@ function addsDeviceFingerPrint() {
 }
 ```
 
-# Cyber Source UI
+### Optional: Merchant Defined Fields
 
-### Merchant Defined Fields
-- In the Merchant Defined Fields Tab, users can define custom fields.
-- The text input follows these rules
-    1. Any values outside of **{{}}** these curly brackets will be taken at direct value
+- In VTEX Admin, search for "Cybersource" to navigate to the app's admin panel.
+- In the `Merchant Defined Fields` tab, users can define custom fields.
+- The text input follows these rules:
+    1. Any values outside of **{{}}** curly brackets will be taken at direct value
     2. Any values between the **{{}}** must be in the following format `Reference Word|Modification Word|Values`
         1. All reference words can be found in the `Show All Referencable Words` dropdown
             1. Reference words can be left blank if `Modification Word` and `Values` are present
@@ -89,7 +115,7 @@ function addsDeviceFingerPrint() {
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Thanks go to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
