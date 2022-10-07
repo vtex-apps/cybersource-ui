@@ -39,11 +39,11 @@ This app uses the CyberSource REST API to process payments, risk management, and
 	- From the list of gateways, select `Cybersource IO`
 	- Configure the affiliation as follows: 
     - Leave `Application Key` & `Application Token` blank (they are not used)
-	  - Select the desired `Payment capture` behavior: 
-      - "Use Behavior Recommended By The Payment Processor" and "Immediate: Automatic Capture After Payment Authorization" are equivalent
-      - If you want more control over payment capture, select "Deactivated"
-      - To immediately authorize and capture in a single API call, select "Use Behavior Recommended..." and set the `Capture Setting` dropdown to "Immediate Capture"
+	  - Select the desired `Payment settlement` behavior: 
+      - "Use Behavior Recommended By The Payment Processor" will result in authorized payments being automatically captured after 4 days (or if the order is invoiced, whichever comes first)
+      - "Deactivated" will result in payments being captured only when the VTEX order is invoiced
 	  - Enter your `Company Name` and `Company Tax Id`
+    - `Capture Setting`: if set to "Immediate Capture", the connector will send a single "Auth and Capture" request to CyberSource when the order is placed; otherwise it will follow standard VTEX behavior (separate calls for auth and capture) 
     - `Merchant Id`, `Merchant Key`, and `Shared Secret Key` are optional overrides; if left blank, the connector will read these values from the settings entered in step 3
   - Click `Save`
 	![image](https://user-images.githubusercontent.com/47258865/178299999-a27149a6-f937-4602-96ed-d232d8795095.png)
