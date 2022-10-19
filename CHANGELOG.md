@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Added dependency for cybersource-payer-auth
+
 ## [0.4.1] - 2022-10-07
 
 ### Changed
