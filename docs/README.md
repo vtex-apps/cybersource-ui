@@ -10,7 +10,7 @@
 
 This app uses the CyberSource REST API to process payments, risk management, and taxes.
 
-## Configuration
+## Configuration 
 
 1. [Install](https://developers.vtex.com/vtex-developer-docs/docs/vtex-io-documentation-installing-an-app) `vtex.cybersource` and `vtex.cybersource-ui` in the desired account.
 
