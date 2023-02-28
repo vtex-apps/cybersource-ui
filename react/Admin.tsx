@@ -80,6 +80,10 @@ const Admin: FC = () => {
     { value: 'MX', label: 'Mexico' },
     { value: 'BR', label: 'Brasil' },
     { value: 'EC', label: 'Ecuador' },
+    { value: 'BO', label: 'Bolivia' },
+    { value: 'GT', label: 'Guatemala' },
+    { value: 'PR', label: 'Puerto Rico' },
+    { value: 'DO', label: 'Dominican Republic' },
     { value: 'Other', label: 'Other' },
   ]
 
@@ -120,9 +124,9 @@ const Admin: FC = () => {
   }
 
   useEffect(() => {
-    if (!data?.appSettings?.message) return
+    if (!data?.publicSettingsForApp?.message) return
 
-    const parsedSettings: any = JSON.parse(data.appSettings.message)
+    const parsedSettings: any = JSON.parse(data.publicSettingsForApp.message)
 
     setSettingsState(parsedSettings)
   }, [data])

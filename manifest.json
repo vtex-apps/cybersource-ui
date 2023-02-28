@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "vtex.styleguide": "9.x",
-    "vtex.apps-graphql": "2.x",
+    "vtex.apps-graphql": "3.x",
     "vtex.cybersource": "1.x",
     "vtex.cybersource-payer-auth": "0.x"
   },
