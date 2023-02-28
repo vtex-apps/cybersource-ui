@@ -80,10 +80,6 @@ const Admin: FC = () => {
     { value: 'MX', label: 'Mexico' },
     { value: 'BR', label: 'Brasil' },
     { value: 'EC', label: 'Ecuador' },
-    { value: 'BO', label: 'Bolivia' },
-    { value: 'GT', label: 'Guatemala' },
-    { value: 'PR', label: 'Puerto Rico' },
-    { value: 'DO', label: 'Dominican Republic' },
     { value: 'Other', label: 'Other' },
   ]
 
