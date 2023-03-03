@@ -120,9 +120,9 @@ const Admin: FC = () => {
   }
 
   useEffect(() => {
-    if (!data?.appSettings?.message) return
+    if (!data?.publicSettingsForApp?.message) return
 
-    const parsedSettings: any = JSON.parse(data.appSettings.message)
+    const parsedSettings: any = JSON.parse(data.publicSettingsForApp.message)
 
     setSettingsState(parsedSettings)
   }, [data])
