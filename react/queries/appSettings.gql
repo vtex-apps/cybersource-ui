@@ -1,5 +1,5 @@
 query AppSettings($version: String) {
-  publicSettingsForApp(app: "vtex.cybersource-ui", version: $version)
+  appSettings(app: "vtex.cybersource-ui", version: $version)
     @context(provider: "vtex.apps-graphql") {
     message
   }
