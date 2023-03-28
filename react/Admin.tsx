@@ -121,7 +121,7 @@ const Admin: FC = () => {
 
   useEffect(() => {
     if (!data?.getAppSettings) return
-    
+
     setSettingsState({
       ...settingsState,
       CustomNsu: data.getAppSettings.customNsu,
@@ -136,7 +136,7 @@ const Admin: FC = () => {
       Region: data.getAppSettings.region,
       SalesChannelExclude: data.getAppSettings.salesChannelExclude,
       SharedSecretKey: data.getAppSettings.sharedSecretKey,
-      ShippingProductCode: data.getAppSettings.shippingProductCode
+      ShippingProductCode: data.getAppSettings.shippingProductCode,
     })
   }, [data])
 
