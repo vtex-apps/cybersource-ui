@@ -120,11 +120,24 @@ const Admin: FC = () => {
   }
 
   useEffect(() => {
-    if (!data?.publicSettingsForApp?.message) return
-
-    const parsedSettings: any = JSON.parse(data.publicSettingsForApp.message)
-
-    setSettingsState(parsedSettings)
+    if (!data?.getAppSettings) return
+    
+    setSettingsState({
+      ...settingsState,
+      CustomNsu: data.getAppSettings.customNsu,
+      EnableTax: data.getAppSettings.enableTax,
+      EnableTransactionPosting: data.getAppSettings.enableTrasactionPosting,
+      IsLive: data.getAppSettings.isLive,
+      MerchantId: data.getAppSettings.merchantId,
+      MerchantKey: data.getAppSettings.merchantKey,
+      NexusRegions: data.getAppSettings.nexusRegions,
+      OrderSuffix: data.getAppSettings.orderSuffix,
+      Processor: data.getAppSettings.processor,
+      Region: data.getAppSettings.region,
+      SalesChannelExclude: data.getAppSettings.salesChannelExclude,
+      SharedSecretKey: data.getAppSettings.sharedSecretKey,
+      ShippingProductCode: data.getAppSettings.shippingProductCode
+    })
   }, [data])
 
   if (!data) {

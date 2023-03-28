@@ -1,6 +1,17 @@
 query AppSettings($version: String) {
-  publicSettingsForApp(app: "vtex.cybersource-ui", version: $version)
-    @context(provider: "vtex.apps-graphql") {
-    message
+  getAppSettings{
+    isLive
+    merchantId
+    merchantKey
+    sharedSecretKey
+    processor
+    region
+    orderSuffix
+    customNsu
+    enableTax
+    enableTransactionPosting
+    salesChannelExclude
+    shippingProductCode
+    nexusRegions
   }
 }
