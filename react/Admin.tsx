@@ -137,6 +137,7 @@ const Admin: FC = () => {
       SalesChannelExclude: data.getAppSettings.salesChannelExclude,
       SharedSecretKey: data.getAppSettings.sharedSecretKey,
       ShippingProductCode: data.getAppSettings.shippingProductCode,
+      MerchantDictionary: data.getAppSettings.merchantDictionary,
     })
   }, [data])
 
