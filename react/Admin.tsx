@@ -341,7 +341,7 @@ const Admin: FC = () => {
                             setSettingsState({
                               ...settingsState,
                               UseOrderIdForFingerprint:
-                               !settingsState.UseOrderIdForFingerprint,
+                                !settingsState.UseOrderIdForFingerprint,
                             })
                           }}
                           helpText={formatMessage({
