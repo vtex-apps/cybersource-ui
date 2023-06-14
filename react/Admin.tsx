@@ -340,7 +340,7 @@ const Admin: FC = () => {
                           onChange={() => {
                             setSettingsState({
                               ...settingsState,
-                              EnableTax: !settingsState.UseOrderIdForFingerprint,
+                              UseOrderIdForFingerprint: !settingsState.UseOrderIdForFingerprint,
                             })
                           }}
                           helpText={formatMessage({
