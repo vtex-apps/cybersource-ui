@@ -48,6 +48,7 @@ const Admin: FC = () => {
     NexusRegions: '',
     EnableTax: false,
     MerchantDictionary: [],
+    UseOrderIdForFingerprint: false,
   })
 
   const [initialAdminState, setAdminState] = useState({
@@ -138,6 +139,7 @@ const Admin: FC = () => {
       SharedSecretKey: data.getAppSettings.sharedSecretKey,
       ShippingProductCode: data.getAppSettings.shippingProductCode,
       MerchantDictionary: data.getAppSettings.merchantDictionary,
+      UseOrderIdForFingerprint: data.getAppSettings.useOrderIdForFingerprint,
     })
   }, [data])
 
@@ -324,6 +326,25 @@ const Admin: FC = () => {
                           }
                           helpText={formatMessage({
                             id: 'admin/cybersource.settings.customNsu.helpText',
+                          })}
+                        />
+                      </section>
+                      <section className="pv4">
+                        <Toggle
+                          semantic
+                          label={formatMessage({
+                            id: 'admin/cybersource.settings.UseOrderIdForFingerprint.label',
+                          })}
+                          size="large"
+                          checked={settingsState.UseOrderIdForFingerprint}
+                          onChange={() => {
+                            setSettingsState({
+                              ...settingsState,
+                              EnableTax: !settingsState.UseOrderIdForFingerprint,
+                            })
+                          }}
+                          helpText={formatMessage({
+                            id: 'admin/cybersource.settings.UseOrderIdForFingerprint.helpText',
                           })}
                         />
                       </section>
