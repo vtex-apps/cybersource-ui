@@ -19,6 +19,8 @@
   "admin/cybersource.settings.merchantKey.helpText": "Write your merchant Key",
   "admin/cybersource.settings.sharedSecretKey.helpText": "Write your shared secret key",
   "admin/cybersource.settings.customNsu.helpText": "Override default NSU with custom value",
+  "admin/cybersource.settings.UseOrderIdForFingerprint.label": "Use Order Id For Device Fingerprint",
+  "admin/cybersource.settings.UseOrderIdForFingerprint.helpText": "Use Order Id For Device Fingerprint in place of the Session Id",
   "admin/cybersource.settings.orderSuffix.helpText": "Optional Order Reference Suffix",
   "admin/cybersource.settings.EnableTax.label": "Enable Tax Calculations",
   "admin/cybersource.settings.EnableTax.helpText": "Enable Tax Placeholder",

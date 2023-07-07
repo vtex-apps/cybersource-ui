@@ -8,6 +8,7 @@ query AppSettings($version: String) {
     region
     orderSuffix
     customNsu
+    useOrderIdForFingerprint
     enableTax
     enableTransactionPosting
     salesChannelExclude
