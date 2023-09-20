@@ -1,23 +1,5 @@
 query AppSettings($version: String) {
-  getAppSettings{
-    isLive
-    merchantId
-    merchantKey
-    sharedSecretKey
-    processor
-    region
-    orderSuffix
-    customNsu
-    useOrderIdForFingerprint
-    enableTax
-    enableTransactionPosting
-    salesChannelExclude
-    shippingProductCode
-    nexusRegions
-    merchantDictionary{
-      userInput
-      isValid
-      goodPortion
-    }
+  appSettings(app: "vtex.cybersource-ui", version: $version)
+    @context(provider: "vtex.apps-graphql") {
+    message
   }
-}
