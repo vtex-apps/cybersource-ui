@@ -125,7 +125,10 @@ const Admin: FC = () => {
 
     const parsedSettings: any = JSON.parse(data.appSettings.message)
 
-    setSettingsState(parsedSettings)
+    setSettingsState({
+      ...settingsState,
+      ...parsedSettings
+      })
   }, [data])
 
   if (!data) {
