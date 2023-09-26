@@ -121,26 +121,14 @@ const Admin: FC = () => {
   }
 
   useEffect(() => {
-    if (!data?.getAppSettings) return
+    if (!data?.appSettings?.message) return
+
+    const parsedSettings: any = JSON.parse(data.appSettings.message)
 
     setSettingsState({
       ...settingsState,
-      CustomNsu: data.getAppSettings.customNsu,
-      EnableTax: data.getAppSettings.enableTax,
-      EnableTransactionPosting: data.getAppSettings.enableTrasactionPosting,
-      IsLive: data.getAppSettings.isLive,
-      MerchantId: data.getAppSettings.merchantId,
-      MerchantKey: data.getAppSettings.merchantKey,
-      NexusRegions: data.getAppSettings.nexusRegions,
-      OrderSuffix: data.getAppSettings.orderSuffix,
-      Processor: data.getAppSettings.processor,
-      Region: data.getAppSettings.region,
-      SalesChannelExclude: data.getAppSettings.salesChannelExclude,
-      SharedSecretKey: data.getAppSettings.sharedSecretKey,
-      ShippingProductCode: data.getAppSettings.shippingProductCode,
-      MerchantDictionary: data.getAppSettings.merchantDictionary,
-      UseOrderIdForFingerprint: data.getAppSettings.useOrderIdForFingerprint,
-    })
+      ...parsedSettings
+      })
   }, [data])
 
   if (!data) {
